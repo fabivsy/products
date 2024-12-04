@@ -1,0 +1,25 @@
+---
+const categories = [
+  { id: 'all', name: 'All Products' },
+  { id: 'productivity', name: 'Productivity' },
+  { id: 'project-management', name: 'Project Management' },
+  { id: 'marketing', name: 'Marketing' }
+];
+
+const { activeCategory = 'all' } = Astro.props;
+---
+
+<div class="flex gap-2 mb-8 flex-wrap">
+  {categories.map(category => (
+    <a
+      href={category.id === 'all' ? '/' : `/category/${category.id}`}
+      class={`px-4 py-2 rounded-full transition-colors ${
+        activeCategory === category.id
+          ? 'bg-indigo-600 text-white'
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+      }`}
+    >
+      {category.name}
+    </a>
+  ))}
+</div>

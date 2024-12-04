@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: { id: product.id },
+    props: { product }
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout title={`${product.name} - Tool Details`}>
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <div class="flex justify-between items-start mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">{product.name}</h1>
+        <span class="px-3 py-1 text-sm rounded-full bg-indigo-100 text-indigo-800">
+          {product.pricing.type === 'paid' 
+            ? product.pricing.startingAt 
+            : product.pricing.type}
+        </span>
+      </div>
+
+      <p class="text-xl text-gray-600 mb-8">{product.longDescription}</p>
+
+      {product.features && (
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Key Features</h2>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {product.features.map(feature => (
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        {product.tags.map(tag => (
+          <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <div class="flex gap-4">
+        <a
+          href={product.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors"
+        >
+          Visit Website
+        </a>
+        <a
+          href="/"
+          class="inline-block bg-gray-100 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-200 transition-colors"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

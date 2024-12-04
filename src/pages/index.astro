@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+
+const featuredProducts = products.filter(product => product.isFeatured);
+---
+
+<Layout title="Today's Must-Have Tools for Indie Hackers">
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        Today's Top 5 Tools
+      </h1>
+      <p class="text-xl text-gray-600">
+        Essential products you should check out today to boost your indie hacking journey.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featuredProducts.map(product => (
+        <ProductCard {...product} showDetails={true} />
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    width: 100%;
+    color: #111827;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+</style>
